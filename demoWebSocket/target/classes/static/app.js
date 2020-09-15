@@ -46,6 +46,11 @@ function showGreeting(message) {
     $("#typingUpdates").html("<tr><td>&nbsp;</td></tr>");
 }
 
+function showJoinedName(message){
+shortName = message;
+ $("#members").append("<tr><td>" + message + " just joined </td></tr>");
+}
+
 function showTyping(message) {
 	$("#typingUpdates").html("<tr><td>Someone is typing...</td></tr>");
 }

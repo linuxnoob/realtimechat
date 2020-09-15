@@ -22,6 +22,13 @@ function connect() {
         stompClient.subscribe('/topic/greetings', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
+
+        stompClient.subscribe('/topic/guestnames', function (greeting) {
+            showJoinedName(JSON.parse(greeting.body).content);
+        });
+        stompClient.subscribe('/topic/guestchats', function (greeting) {
+            showMessage(JSON.parse(greeting.body).content);
+        });
         
         stompClient.subscribe('/topic/typing', function (greeting) {
             showTyping(JSON.parse(greeting.body).content);
@@ -40,10 +47,20 @@ function disconnect() {
 function sendName() {
     stompClient.send("/app/hello", {}, JSON.stringify({'senderName': $("#senderName").val()}));
 }
+function showMessage(message) {
+    $("#chatMessages").append("<tr><td>" + message + "</td></tr>");
+    $("#typingUpdates").html("<tr><td>&nbsp;</td></tr>");
+    $("#message").val("");
+}
 
 function showGreeting(message) {
     $("#greetings").append("<tr><td>" + message + "</td></tr>");
     $("#typingUpdates").html("<tr><td>&nbsp;</td></tr>");
+}
+
+function showJoinedName(message){
+shortName = message;
+ $("#members").append("<tr><td>" + message + " just joined </td></tr>");
 }
 
 function showTyping(message) {
